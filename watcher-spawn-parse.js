@@ -8,7 +8,7 @@ const work_directory = __dirname;
 
 const spawn = require("child_process").spawn;
 const child_process_command = process.argv[3] ? process.argv[3] : "ls"; //ls command as default
-const options = process.argv.length > 4 ? process.argv.slice(3-(process.argv.length-1)) : ["-lh"]; // -lh option as default if not more specified
+const options = process.argv.length > 4 ? process.argv.slice(3-(process.argv.length-1)) : ["-lh"]; // -lh option as default if not specified
 
 
 if (!filename){
@@ -30,7 +30,7 @@ fs.access(work_directory + "/" + filename,fs.constants.R_OK,(err) => { //Check f
     let output = "";
 
     ls.stderr.on("error", (err) => {
-      ls.stderr.write(err.message);
+      throw err;
     });
 
     ls.stdout.on("data",chunk => output+=chunk); //append stdout stream data
